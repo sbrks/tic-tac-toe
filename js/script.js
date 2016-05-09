@@ -9,11 +9,12 @@ var winningCombinations = [[0,1,2],[3,4,5],[6,7,8],
 [0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]];
 
 function start () {
-	addXandOListener();
+	addXOListener();
 	addResetListener();
+	document.querySelector(".turnMessage").textContent = "Let's Play! It is X's turn.";
 }
 
-function addXandOListener(){
+function addXOListener(){
   for (var i = board.length - 1; i >= 0; i--) {
     board[i].addEventListener("click", addXorO);
   }
@@ -29,21 +30,22 @@ function addXorO(event){
       event.target.setAttribute("class","O");
       counter ++;
       checkForWin(OMoves, "O");
-      turnMessage.innerHTML = "It is X's turn";
-      //checkForWin(OMoves, "O");
+      document.querySelector(".turnMessage").textContent = "It is X's turn";
     }
     else {
       XMoves.push(parseInt(event.target.getAttribute("data-num")));
       event.target.innerHTML = "X";
       event.target.setAttribute("class","X");
       counter++;
-      turnMessage.innerHTML = "It is O's turn";
       checkForWin(XMoves, "X");
+      document.querySelector(".turnMessage").textContent = "It is O's turn";
+
     }
   // if the counter is greater than or equal to 10, the game is a draw!
   if (counter >= 10){
-    turnMessage.innerHTML = "Game Over!";
-    var conf = confirm("It's a draw, do you want to play again?");
+    //turnMessage.innerHTML = "Game Over!";
+    confirm("It's a draw!");
+    document.querySelector(".turnMessage").textContent = "It's a draw!";
     if(conf){
       resetBoard();
     }
