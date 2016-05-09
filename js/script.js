@@ -1,6 +1,6 @@
 window.onload = start;
 var board = document.getElementsByTagName("td");
-var turnMessage = document.querySelector(".turnMessage");
+//var turnMessage = document.querySelector(".turnMessage");
 var counter = 1;
 var winCounter = 0;
 var OMoves = [];
@@ -131,12 +131,13 @@ function resetBoard () {
 	for (var i = board.length - 1; i >= 0; i--) {
 	board[i].innerHTML="";
     board[i].setAttribute("class","clear");
+    document.querySelector(".turnMessage").textContent = "Let's Play! It is X's turn.";
   }
   OMoves = [];
   XMoves = [];
   winCounter=0;
   counter = 1;
-  turnMessage.innerHTML = "It is X's turn";
+
 }
 
 
