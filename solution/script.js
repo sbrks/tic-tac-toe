@@ -35,7 +35,7 @@ function addXorO(event){
       event.target.setAttribute("class","X");
       turnText.innerHTML = "It is O's turn";
       counter++;
-      checkForWin(XMoves, "X");
+      checkForWin(XMoves,s "X");
     }
   // if the counter is greater than or equal to 10, the game is a draw!
   if (counter >= 10){

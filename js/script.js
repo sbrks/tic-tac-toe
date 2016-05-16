@@ -10,48 +10,51 @@ var winningCombinations = [[0,1,2],[3,4,5],[6,7,8],
 
 function start () {
 	addXOListener();
-	addResetListener();
+	resetListener();
 	document.querySelector(".turnMessage").textContent = "Let's Play! It is X's turn.";
 }
 
 function addXOListener(){
-  for (var i = board.length - 1; i >= 0; i--) {
-    board[i].addEventListener("click", addXorO);
-  }
+	for (var i = board.length - 1; i >= 0; i--) {
+		board[i].addEventListener("click", addXorO);
+	}
 }
 
 
 
 function addXorO(event){
-  if (event.target.innerHTML.length === 0){
-    if (counter % 2 === 0) {
-      OMoves.push(parseInt(event.target.getAttribute("data-num")));
-      event.target.innerHTML = "O";
-      event.target.setAttribute("class","O");
-      counter ++;
-      checkForWin(OMoves, "O");
-      document.querySelector(".turnMessage").textContent = "It is X's turn";
-    }
-    else {
-      XMoves.push(parseInt(event.target.getAttribute("data-num")));
-      event.target.innerHTML = "X";
-      event.target.setAttribute("class","X");
-      counter++;
-      checkForWin(XMoves, "X");
-      document.querySelector(".turnMessage").textContent = "It is O's turn";
+	if (event.target.innerHTML.length === 0){
+		if (counter % 2 === 0) {
+			OMoves.push(parseInt(event.target.getAttribute("data-num")));
+			event.target.innerHTML = "O";
+			event.target.setAttribute("class","O");
+			counter ++;
+			checkForWin(OMoves, "O");
+			document.querySelector(".turnMessage").textContent = "It is X's turn";
+		}
+		else {
+			XMoves.push(parseInt(event.target.getAttribute("data-num")));
+			event.target.innerHTML = "X";
+			event.target.setAttribute("class","X");
+			counter++;
+			checkForWin(XMoves, "X");
+			document.querySelector(".turnMessage").textContent = "It is O's turn";
 
-    }
-  // if the counter is greater than or equal to 10, the game is a draw!
-  if (counter >= 10){
-    //turnMessage.innerHTML = "Game Over!";
-    confirm("It's a draw!");
-    document.querySelector(".turnMessage").textContent = "It's a draw!";
-    if(conf){
-      resetBoard();
-    }
-  }
+		}
+	// if the counter is greater than or equal to 10, the game is a draw!
+	if (counter >= 10){
+		//turnMessage.innerHTML = "Game Over!";
+		confirm("It's a draw!");
+		document.querySelector(".turnMessage").textContent = "It's a draw!";
+		if(conf){
+			resetBoard();
+		}
+	}
  }
 }
+
+
+
 
 /*
 function checkWin () {
@@ -99,44 +102,44 @@ function checkWin () {
 
 */
 
-function addResetListener () {
+
+
+function checkForWin(movesArray, name){
+	// loop over the first array of winning combinations
+	for (i = 0; i < winningCombinations.length; i++) {
+		// reset the winCounter each time!
+		winCounter = 0;
+		// loop over each individual array
+		for (var j = 0; j < winningCombinations[i].length; j++) {
+			// if the number in winning combo array is === a number in moves array, add to winCounter
+			if(movesArray.indexOf(winningCombinations[i][j]) !== -1){
+				winCounter++;
+			}
+			// if winCounter === 3 that means all 3 moves are winning combos and game is over
+			if(winCounter === 3){
+				alert("Game over. Player " + name + " wins!");
+				resetBoard();
+			}
+		}
+	}
+}
+
+function resetListener () {
 	var resetButton = document.getElementById("reset");
 	resetButton.addEventListener("click", resetBoard);
 
 }
 
-
-function checkForWin(movesArray, name){
-  // loop over the first array of winning combinations
-  for (i = 0; i < winningCombinations.length; i++) {
-    // reset the winCounter each time!
-    winCounter = 0;
-    // loop over each individual array
-    for (var j = 0; j < winningCombinations[i].length; j++) {
-      // if the number in winning combo array is === a number in moves array, add to winCounter
-      if(movesArray.indexOf(winningCombinations[i][j]) !== -1){
-        winCounter++;
-      }
-      // if winCounter === 3 that means all 3 moves are winning combos and game is over!
-      if(winCounter === 3){
-        alert("Game over. Player " + name + " wins!");
-        resetBoard();
-      }
-    }
-  }
-}
-
-
 function resetBoard () {
 	for (var i = board.length - 1; i >= 0; i--) {
 	board[i].innerHTML="";
-    board[i].setAttribute("class","clear");
-    document.querySelector(".turnMessage").textContent = "Let's Play! It is X's turn.";
-  }
-  OMoves = [];
-  XMoves = [];
-  winCounter=0;
-  counter = 1;
+		board[i].setAttribute("class","clear");
+		document.querySelector(".turnMessage").textContent = "Let's Play! It is X's turn.";
+	}
+	OMoves = [];
+	XMoves = [];
+	winCounter=0;
+	counter = 1;
 
 }
 
